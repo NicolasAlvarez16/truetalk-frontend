@@ -11,10 +11,10 @@ COPY . .
 # BUILD
 
 # Install dependecnies  (npm ci makes sure the exac versions in the lockfile gets installed)
-RUN npm ci
+RUN yarn install
 
 # Build the app
-RUN npm run build
+RUN yarn build
 
 # RUN
 
@@ -25,4 +25,4 @@ ENV NODE_ENV development
 EXPOSE 3000
 
 # start the app
-CMD ["npx", "serve", "build"]
+CMD ["yarn", "start"]
