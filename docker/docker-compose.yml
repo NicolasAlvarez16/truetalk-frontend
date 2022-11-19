@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  hive-frontend-service:
+    container_name: hive-frontend
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - '3000:3000'

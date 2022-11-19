@@ -6,7 +6,7 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Copy all repo file to app
-COPY /.. .
+COPY . .
 
 # BUILD
 
