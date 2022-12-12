@@ -12,8 +12,8 @@ function RightBar() {
               <span>MonkeyMeme</span>
             </div>
             <div className="buttons">
-              <button>follow</button>
-              <button>dismiss</button>
+              <button>Follow</button>
+              <button>Dismiss</button>
             </div>
           </div>
           <div className="user">
@@ -22,8 +22,8 @@ function RightBar() {
               <span>MonkeyMeme</span>
             </div>
             <div className="buttons">
-              <button>follow</button>
-              <button>dismiss</button>
+              <button>Follow</button>
+              <button>Dismiss</button>
             </div>
           </div>
         </div>
