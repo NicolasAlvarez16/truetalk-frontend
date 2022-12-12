@@ -12,6 +12,7 @@ import {
 import Navbar from "./components/navbar/Navbar"
 import RightBar from "./components/rightbar/RightBar"
 import LeftBar from "./components/leftbar/LeftBar"
+import "./style.scss"
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
 
   const Layout = () => {
     return (
-        <div>
+        <div className="theme-dark">
           <Navbar />
           <div style={{display: "flex"}}>
             <LeftBar />
