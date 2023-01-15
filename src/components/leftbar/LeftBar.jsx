@@ -4,15 +4,20 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventIcon from '@mui/icons-material/Event';
 import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
 import FeedIcon from '@mui/icons-material/Feed';
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const LeftBar = () => {
+
+  const { currentUser } = useContext(AuthContext)
+
   return (
     <div className='leftBar'>
       <div className="container">
         <div className="menu">
           <div className="user">
             <img src="https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg" alt="" />
-            <span>This is fine</span>
+            <span>{currentUser.name}</span>
           </div>
           <div className="item">
             <div className="icon">
