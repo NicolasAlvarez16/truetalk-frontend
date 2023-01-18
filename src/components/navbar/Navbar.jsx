@@ -35,7 +35,7 @@ const Navbar = () => {
                 <EmailOutlinedIcon />
                 <NotificationsNoneOutlinedIcon />
                 <div className="user">
-                    <img src="https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg" alt="" />
+                    <img src={currentUser.img} alt="" />
                     <span>{currentUser.name}</span>
                 </div>
             </div>
