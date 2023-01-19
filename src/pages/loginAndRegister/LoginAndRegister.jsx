@@ -1,9 +1,9 @@
 import { useRef, useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
-import "./login.scss"
+import "./loginAndRegister.scss"
 
-function Login(props) {
+function LoginAndRegister(props) {
 
     const { login } = useContext(AuthContext)
 
@@ -23,31 +23,32 @@ function Login(props) {
 
     return (
         <div className="login">
-            <div className={`container ${props.panel}`} id="container" ref={rightPanelActive}>
+            <div className={`container ${props.isRightPanelActive}`} id="container" ref={rightPanelActive}>
                 <div className="form-container sign-up-container">
                     <form action="#">
-                        <h1>Create Account</h1>
-                        <div className="social-container">
+                        <h1>Create Account</h1><br></br>
+                        {/* <div className="social-container">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                             <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
-                        </div>
-                        <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" />
+                        </div> */}
+                        {/* <span>or use your email for registration</span> */}
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
+                        <input type="password" placeholder="Confirm Password" />
+                        {/* <input type="tel" id="phone" name="phone" placeholder="Phone Number"/> */}
                         <button>Sign Up</button>
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
                     <form action="#">
-                        <h1>Sign in</h1>
-                        <div className="social-container">
+                        <h1>Sign in</h1><br></br>
+                        {/* <div className="social-container">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                             <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
-                        </div>
-                        <span>or use your account</span>
+                        </div> */}
+                        {/* <span>or use your account</span> */}
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
                         <a href="#">Forgot your password?</a>
@@ -85,4 +86,4 @@ function Login(props) {
     )
 }
 
-export default Login
+export default LoginAndRegister
