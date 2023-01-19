@@ -1,5 +1,4 @@
-import Login from "./pages/login/Login"
-import Register from "./pages/register/Register"
+import LoginAndRegister from "./pages/loginAndRegister/LoginAndRegister"
 import Home from "./pages/home/Home"
 import Profile from "./pages/profile/Profile"
 import {
@@ -68,11 +67,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login />
+      element: <LoginAndRegister isRightPanelActive=""/>
     },
     {
       path: "/register",
-      element: <Register />
+      element: <LoginAndRegister isRightPanelActive="right-panel-active"/>
     }
   ])
     return (
