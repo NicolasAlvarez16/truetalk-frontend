@@ -1,42 +1,87 @@
-import { useContext } from "react"
+import { useRef, useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
 import "./login.scss"
 
-const Login = () => {
+function Login(props) {
 
-    const {login} = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
 
     const handleLogin = () => {
         login()
     }
 
+    const rightPanelActive = useRef(null)
+
+    const activateRightPanel = () => {
+        rightPanelActive.current.classList.add("right-panel-active");
+    }
+
+    const deactivateRightPanle = () => {
+        rightPanelActive.current.classList.remove("right-panel-active")
+    }
+
     return (
         <div className="login">
-            <div className="card">
-                <div className="left">
-                    <h1>Hello World</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et blandit dolor, non eleifend nisl. 
-                        Nulla imperdiet sed urna ac lobortis. Vestibulum ante massa, consequat faucibus viverra non, porttitor in mauris. 
-                        Aliquam ultricies massa ex, vel volutpat nulla tristique in. Donec in suscipit leo, a venenatis eros. 
-                        Praesent semper volutpat volutpat.
-                    </p>
-                    <span>Don't have an account?</span>
-                    <Link to="/register">
-                        <button>Register</button>
-                    </Link>
-                </div>
-                <div className="right">
-                    <h1>Login</h1>
-                    <form>
-                        <input type="text" placeholder="username"/>
-                        <input type="password" placeholder="password"/>
-                        <button onClick={handleLogin}>Login</button>
+            <div className={`container ${props.panel}`} id="container" ref={rightPanelActive}>
+                <div className="form-container sign-up-container">
+                    <form action="#">
+                        <h1>Create Account</h1>
+                        <div className="social-container">
+                            <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                            <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                            <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span>or use your email for registration</span>
+                        <input type="text" placeholder="Name" />
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Password" />
+                        <button>Sign Up</button>
                     </form>
                 </div>
+                <div className="form-container sign-in-container">
+                    <form action="#">
+                        <h1>Sign in</h1>
+                        <div className="social-container">
+                            <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                            <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                            <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span>or use your account</span>
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Password" />
+                        <a href="#">Forgot your password?</a>
+                        <button onClick={handleLogin}>Sign In</button>
+                    </form>
+                </div>
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-left">
+                            <h1>Welcome Back!</h1>
+                            <p>To keep connected with us please login with your personal info</p>
+                            <Link to="/login">
+                                <button className="ghost" id="signIn" onClick={deactivateRightPanle}>Sign In</button>
+                            </Link>
+                        </div>
+                        <div className="overlay-panel overlay-right">
+                            <h1>Hello, Friend!</h1>
+                            <p>Enter your personal details and start journey with us</p>
+                            <Link to="/register">
+                                <button className="ghost" id="signUp" onClick={activateRightPanel}>Sign Up</button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            {/* <footer>
+                <p>
+                    Created with <i className="fa fa-heart"></i> by
+                    <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+                    - Read how I created this and how you can join the challenge
+                    <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+                </p>
+            </footer> */}
+        </div> 
     )
 }
 

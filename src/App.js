@@ -68,11 +68,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login />
+      element: <Login panel=""/>
     },
     {
       path: "/register",
-      element: <Register />
+      element: <Login panel="right-panel-active"/>
     }
   ])
     return (
