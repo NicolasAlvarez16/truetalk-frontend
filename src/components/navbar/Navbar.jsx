@@ -1,6 +1,6 @@
 import "./navbar.scss"
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import NightsStayOutlinedIcon from '@mui/icons-material/NightsStayOutlined';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -23,7 +23,7 @@ const Navbar = () => {
                     <span>hive</span>
                 </Link>
                 <HomeOutlinedIcon />
-                {darkMode ? <WbSunnyIcon onClick={toggle}/> : <NightsStayOutlinedIcon onClick={toggle}/>}
+                {darkMode ? <WbSunnyIcon onClick={toggle}/> : <DarkModeIcon onClick={toggle}/>}
                 <GridViewOutlinedIcon />
                 <div className="search">
                     <SearchOutlinedIcon />
