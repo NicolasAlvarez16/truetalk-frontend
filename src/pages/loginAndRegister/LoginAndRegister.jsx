@@ -1,11 +1,15 @@
 import { useRef, useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
+import { registerUser } from "../../services/userService"
 import "./loginAndRegister.scss"
 
 function LoginAndRegister(props) {
 
     const { login } = useContext(AuthContext)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    // const [phoneNumber, setPhoneNumber] = useState('')
 
     const handleLogin = () => {
         login()
@@ -21,11 +25,16 @@ function LoginAndRegister(props) {
         rightPanelActive.current.classList.remove("right-panel-active")
     }
 
+    const handleSignUpSubmit = (e) => {
+        e.preventDefault()
+        registerUser(email, password)
+    }
+
     return (
         <div className="login">
             <div className={`container ${props.isRightPanelActive}`} id="container" ref={rightPanelActive}>
                 <div className="form-container sign-up-container">
-                    <form action="#">
+                    <form onSubmit={handleSignUpSubmit}>
                         <h1>Create Account</h1><br></br>
                         {/* <div className="social-container">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -33,11 +42,11 @@ function LoginAndRegister(props) {
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                         </div> */}
                         {/* <span>or use your email for registration</span> */}
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <input type="password" placeholder="Confirm Password" />
                         {/* <input type="tel" id="phone" name="phone" placeholder="Phone Number"/> */}
-                        <button>Sign Up</button>
+                        <button type="submit">Sign Up</button>
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
@@ -74,6 +83,7 @@ function LoginAndRegister(props) {
                     </div>
                 </div>
             </div>
+            {/* It will be nice to use this footer to redirect to a landing page where the project and the roadmap is explained */}
             {/* <footer>
                 <p>
                     Created with <i className="fa fa-heart"></i> by
