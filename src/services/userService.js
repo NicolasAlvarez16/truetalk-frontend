@@ -4,7 +4,6 @@ export async function registerUser(email, password) {
         body: JSON.stringify({
             email: email,
             password: password,
-            phone_number: "+3530838455233"
         }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
