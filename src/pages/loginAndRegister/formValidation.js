@@ -17,7 +17,7 @@ const emailValidation = (email) => {
 const passwordValidation = (password) => {
     if(!password) {
         return "Password is required"
-    } else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,45}$/i.test(password)) {
+    } else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(password)) {
         return "Password must be at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character"
     } else {
         return ""

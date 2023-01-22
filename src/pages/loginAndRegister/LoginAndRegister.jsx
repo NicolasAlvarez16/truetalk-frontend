@@ -21,10 +21,12 @@ function LoginAndRegister(props) {
 
     const activateRightPanel = () => {
         rightPanelActive.current.classList.add("right-panel-active");
+        setFormErrors('');
     }
 
     const deactivateRightPanle = () => {
         rightPanelActive.current.classList.remove("right-panel-active")
+        setFormErrors('');
     }
 
     const handleSignUpSubmit = (e) => {
@@ -33,12 +35,24 @@ function LoginAndRegister(props) {
 
         Object.entries(errors).forEach((entry) => {
             const [key, value] = entry
-            setFormErrors((prevState) => ({ ...prevState, [key]: value}));
+            setFormErrors((prevState) => ({ ...prevState, [key]: value }));
         })
 
         if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
             registerUser(email, password)
         }
+    }
+
+    const handleSignInSubmit = (e) => {
+        e.preventDefault()
+        const errors = formValidation(email, password)
+
+        Object.entries(errors).forEach((entry) => {
+            const [key, value] = entry
+            if(key !== confirmPassword) {
+                setFormErrors((prevState) => ({ ...prevState, [key]: value }))
+            }
+        })
     }
 
     return (
@@ -64,7 +78,7 @@ function LoginAndRegister(props) {
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="#">
+                    <form onSubmit={handleSignInSubmit}>
                         <h1>Sign in</h1><br></br>
                         {/* <div className="social-container">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -72,8 +86,10 @@ function LoginAndRegister(props) {
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                         </div> */}
                         {/* <span>or use your account</span> */}
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        {formErrors.email && <span className="error">{formErrors.email}</span>}
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        {formErrors.password && <span className="error">{formErrors.password}</span>}
                         <a href="#">Forgot your password?</a>
                         <button onClick={handleLogin}>Sign In</button>
                     </form>
