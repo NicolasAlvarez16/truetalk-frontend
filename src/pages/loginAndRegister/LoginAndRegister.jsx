@@ -29,15 +29,16 @@ function LoginAndRegister(props) {
         setFormErrors('');
     }
 
+    const setErrors = (email, password, confirmPassword=null) => {
+        Object.entries(formValidation(email, password, confirmPassword)).forEach((entry) => {
+            const [key, value] = entry
+            setFormErrors((prevState) => ({ ...prevState, [key]: value }))
+        })
+    }
+
     const handleSignUpSubmit = (e) => {
         e.preventDefault()
-        const errors = formValidation(email, password, confirmPassword)
-
-        Object.entries(errors).forEach((entry) => {
-            const [key, value] = entry
-            setFormErrors((prevState) => ({ ...prevState, [key]: value }));
-        })
-
+        setErrors(email, password, confirmPassword)
         if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
             registerUser(email, password)
         }
@@ -45,14 +46,7 @@ function LoginAndRegister(props) {
 
     const handleSignInSubmit = (e) => {
         e.preventDefault()
-        const errors = formValidation(email, password)
-
-        Object.entries(errors).forEach((entry) => {
-            const [key, value] = entry
-            if(key !== confirmPassword) {
-                setFormErrors((prevState) => ({ ...prevState, [key]: value }))
-            }
-        })
+        setErrors(email, password)
     }
 
     return (
