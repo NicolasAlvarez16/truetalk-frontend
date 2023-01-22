@@ -2,6 +2,7 @@ import { useRef, useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
 import { registerUser } from "../../services/userService"
+import { formValidation } from "./formValidation"
 import "./loginAndRegister.scss"
 
 function LoginAndRegister(props) {
@@ -9,7 +10,8 @@ function LoginAndRegister(props) {
     const { login } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [phoneNumber, setPhoneNumber] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [formErrors, setFormErrors] = useState('')
 
     const handleLogin = () => {
         login()
@@ -19,15 +21,32 @@ function LoginAndRegister(props) {
 
     const activateRightPanel = () => {
         rightPanelActive.current.classList.add("right-panel-active");
+        setFormErrors('');
     }
 
     const deactivateRightPanle = () => {
         rightPanelActive.current.classList.remove("right-panel-active")
+        setFormErrors('');
+    }
+
+    const setErrors = (email, password, confirmPassword=null) => {
+        Object.entries(formValidation(email, password, confirmPassword)).forEach((entry) => {
+            const [key, value] = entry
+            setFormErrors((prevState) => ({ ...prevState, [key]: value }))
+        })
     }
 
     const handleSignUpSubmit = (e) => {
         e.preventDefault()
-        registerUser(email, password)
+        setErrors(email, password, confirmPassword)
+        if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
+            registerUser(email, password)
+        }
+    }
+
+    const handleSignInSubmit = (e) => {
+        e.preventDefault()
+        setErrors(email, password)
     }
 
     return (
@@ -43,14 +62,17 @@ function LoginAndRegister(props) {
                         </div> */}
                         {/* <span>or use your email for registration</span> */}
                         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        {formErrors.email && <span className="error">{formErrors.email}</span>}
                         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <input type="password" placeholder="Confirm Password" />
+                        {formErrors.password && <span className="error">{formErrors.password}</span>}
+                        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                        {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
                         {/* <input type="tel" id="phone" name="phone" placeholder="Phone Number"/> */}
-                        <button type="submit">Sign Up</button>
+                        <br></br><button type="submit">Sign Up</button>
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="#">
+                    <form onSubmit={handleSignInSubmit}>
                         <h1>Sign in</h1><br></br>
                         {/* <div className="social-container">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -58,8 +80,10 @@ function LoginAndRegister(props) {
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                         </div> */}
                         {/* <span>or use your account</span> */}
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        {formErrors.email && <span className="error">{formErrors.email}</span>}
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        {formErrors.password && <span className="error">{formErrors.password}</span>}
                         <a href="#">Forgot your password?</a>
                         <button onClick={handleLogin}>Sign In</button>
                     </form>
