@@ -5,8 +5,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MessageIcon from '@mui/icons-material/Message';
 import ShareIcon from '@mui/icons-material/Share';
+import Comments from "../comments/Comment";
+import { SettingsInputComponent } from "@mui/icons-material";
+import { useState } from "react";
 
 const Post = ({post}) => {
+
+    const [commentOpen, setCommentOpen] = useState(false)
 
     // TEMPORARY 
     const liked = false
@@ -35,7 +40,7 @@ const Post = ({post}) => {
                         {liked ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                         12 Likes
                     </div>
-                    <div className="item">
+                    <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <MessageIcon/>
                         12 Comments
                     </div>
@@ -43,6 +48,7 @@ const Post = ({post}) => {
                         <ShareIcon/>
                     </div>
                 </div>
+                {commentOpen && <Comments/>}
             </div>
         </div>
     )
