@@ -16,7 +16,7 @@ const Stories = () => {
         {
             id: 2,
             name: "Hi",
-            img: "https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/06/04/16543614394340.jpg"
+            img: "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg"
         },
         {
             id: 3,
@@ -38,7 +38,7 @@ const Stories = () => {
                 <button>+</button>
             </div>
             {stories.map(story => (
-                <div className="story">
+                <div className="story" key={story.id}>
                     <img src={story.img}></img>
                     <span>{story.name}</span>
                 </div>
