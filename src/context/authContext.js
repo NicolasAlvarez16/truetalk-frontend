@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { createContext } from "react"
-import { json } from "react-router-dom"
 import { loginUser } from "../services/userService"
 
 export const AuthContext = createContext()
@@ -34,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [token])
 
     return(
-        <AuthContext.Provider value={{ currentUser, login }}>
+        <AuthContext.Provider value={{ token, currentUser, login }}>
             {children}
         </AuthContext.Provider>
     )

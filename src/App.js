@@ -15,10 +15,11 @@ import "./style.scss"
 import { useContext } from "react"
 import { DarkModeContext } from "./context/darkModeContext"
 import { AuthContext } from "./context/authContext"
+import jwtDecode from "jwt-decode";
 
 function App() {
 
-  const {currentUser} = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
 
   const {darkMode} = useContext(DarkModeContext)
 
@@ -37,15 +38,20 @@ function App() {
     )
   }
 
-  // Temporal logic
   const ProtectedRoute = ({children}) => {
     // stop using current user, start using token instead
     // 2 checks -> !token, or token expired
-    if (!currentUser) {
+    if (!token || isTokenExpired()) {
       return <Navigate to="/login" />
     }
 
     return children;
+  }
+  
+  const isTokenExpired = () => {
+    const decodedToken = jwtDecode(token)
+    const currentTime = Date.now() / 1000
+    return decodedToken.exp < currentTime
   }
 
   const router = createBrowserRouter([

@@ -1,5 +1,5 @@
 import { useRef, useState, useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
 import { registerUser } from "../../services/userService"
 import { formValidation } from "./formValidation"
@@ -12,6 +12,7 @@ function LoginAndRegister(props) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [formErrors, setFormErrors] = useState('')
+    const navigate = useNavigate()
 
 
     const rightPanelActive = useRef(null)
@@ -26,7 +27,7 @@ function LoginAndRegister(props) {
         setFormErrors('');
     }
 
-    const setErrors = (email, password, confirmPassword=null) => {
+    const setErrors = (email, password, confirmPassword = null) => {
         Object.entries(formValidation(email, password, confirmPassword)).forEach((entry) => {
             const [key, value] = entry
             setFormErrors((prevState) => ({ ...prevState, [key]: value }))
@@ -43,8 +44,9 @@ function LoginAndRegister(props) {
 
     const handleSignInSubmit = (e) => {
         e.preventDefault()
-        // setErrors(email, password)
+        setErrors(email, password)
         login(email, password)
+        navigate("/")
     }
 
     return (
