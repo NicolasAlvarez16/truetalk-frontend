@@ -13,9 +13,6 @@ function LoginAndRegister(props) {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [formErrors, setFormErrors] = useState('')
 
-    const handleLogin = () => {
-        login()
-    }
 
     const rightPanelActive = useRef(null)
 
@@ -46,7 +43,8 @@ function LoginAndRegister(props) {
 
     const handleSignInSubmit = (e) => {
         e.preventDefault()
-        setErrors(email, password)
+        // setErrors(email, password)
+        login(email, password)
     }
 
     return (
@@ -85,7 +83,7 @@ function LoginAndRegister(props) {
                         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         {formErrors.password && <span className="error">{formErrors.password}</span>}
                         <a href="#">Forgot your password?</a>
-                        <button onClick={handleLogin}>Sign In</button>
+                        <button onClick={handleSignInSubmit}>Sign In</button>
                     </form>
                 </div>
                 <div className="overlay-container">

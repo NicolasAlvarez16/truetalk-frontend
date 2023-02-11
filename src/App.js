@@ -31,7 +31,7 @@ function App() {
             <div style={{flex:6}}>
               <Outlet />
             </div>
-            <RightBar />
+            {/* <RightBar /> */}
           </div>
         </div>
     )
@@ -39,6 +39,8 @@ function App() {
 
   // Temporal logic
   const ProtectedRoute = ({children}) => {
+    // stop using current user, start using token instead
+    // 2 checks -> !token, or token expired
     if (!currentUser) {
       return <Navigate to="/login" />
     }
