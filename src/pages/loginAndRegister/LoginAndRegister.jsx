@@ -7,7 +7,7 @@ import "./loginAndRegister.scss"
 
 function LoginAndRegister(props) {
 
-    const { login } = useContext(AuthContext)
+    const { token, login } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -44,9 +44,10 @@ function LoginAndRegister(props) {
 
     const handleSignInSubmit = async (e) => {
         e.preventDefault()
-        setErrors(email, password)
         await login(email, password)
-        navigate("/")
+        if (token) {
+            navigate("/")
+        }
     }
 
     return (

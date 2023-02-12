@@ -32,14 +32,15 @@ function App() {
             <div style={{flex:6}}>
               <Outlet />
             </div>
-            {/* <RightBar /> */}
+            <RightBar />
           </div>
         </div>
     )
   }
 
   const ProtectedRoute = ({children}) => {
-      if (isTokenExpired()) {
+      if (!token || isTokenExpired()) {
+        console.log("Not fast enough hahah")
         return <Navigate to="/login" />
       }
 
@@ -47,9 +48,6 @@ function App() {
   }
   
   const isTokenExpired = () => {
-    if (token === null) {
-      return <Navigate to="/login" />
-    }
     const decodedToken = jwtDecode(token)
     const currentTime = Date.now() / 1000
     return decodedToken.exp < currentTime

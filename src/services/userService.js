@@ -27,7 +27,12 @@ export async function loginUser(email, password) {
         },
     })
     .then(response => response.json())
-    .then(response => response.data.token)
+    .then(response => {
+        if(response.status === 200) {
+            return response.data.token
+        }
+        return null
+    })
     .catch((err) => {
         console.log(err.message)
     })
