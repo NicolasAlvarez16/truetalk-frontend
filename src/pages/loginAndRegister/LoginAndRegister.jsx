@@ -1,5 +1,5 @@
 import { useRef, useState, useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
 import { registerUser } from "../../services/userService"
 import { formValidation } from "./formValidation"
@@ -7,15 +7,13 @@ import "./loginAndRegister.scss"
 
 function LoginAndRegister(props) {
 
-    const { login } = useContext(AuthContext)
+    const { token, login } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [formErrors, setFormErrors] = useState('')
+    const navigate = useNavigate()
 
-    const handleLogin = () => {
-        login()
-    }
 
     const rightPanelActive = useRef(null)
 
@@ -29,7 +27,7 @@ function LoginAndRegister(props) {
         setFormErrors('');
     }
 
-    const setErrors = (email, password, confirmPassword=null) => {
+    const setErrors = (email, password, confirmPassword = null) => {
         Object.entries(formValidation(email, password, confirmPassword)).forEach((entry) => {
             const [key, value] = entry
             setFormErrors((prevState) => ({ ...prevState, [key]: value }))
@@ -44,9 +42,12 @@ function LoginAndRegister(props) {
         }
     }
 
-    const handleSignInSubmit = (e) => {
+    const handleSignInSubmit = async (e) => {
         e.preventDefault()
-        setErrors(email, password)
+        await login(email, password)
+        if (token) {
+            navigate("/")
+        }
     }
 
     return (
@@ -85,7 +86,7 @@ function LoginAndRegister(props) {
                         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         {formErrors.password && <span className="error">{formErrors.password}</span>}
                         <a href="#">Forgot your password?</a>
-                        <button onClick={handleLogin}>Sign In</button>
+                        <button onClick={handleSignInSubmit}>Sign In</button>
                     </form>
                 </div>
                 <div className="overlay-container">

@@ -4,7 +4,7 @@ function RightBar() {
   return (
     <div className="rightBar">
       <div className="container">
-        <div className="item">
+        {/* <div className="item">
           <span>Suggestions for you</span>
           <div className="user">
             <div className="userInfo">
@@ -80,7 +80,7 @@ function RightBar() {
               <span>MonkeyMeme</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
