@@ -42,10 +42,10 @@ function LoginAndRegister(props) {
         }
     }
 
-    const handleSignInSubmit = (e) => {
+    const handleSignInSubmit = async (e) => {
         e.preventDefault()
         setErrors(email, password)
-        login(email, password)
+        await login(email, password)
         navigate("/")
     }
 

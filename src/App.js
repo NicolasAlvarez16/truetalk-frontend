@@ -41,9 +41,9 @@ function App() {
   const ProtectedRoute = ({children}) => {
     // stop using current user, start using token instead
     // 2 checks -> !token, or token expired
-    if (!token || isTokenExpired()) {
-      return <Navigate to="/login" />
-    }
+      if (isTokenExpired()) {
+        return <Navigate to="/login" />
+      }
 
     return children;
   }

@@ -18,7 +18,8 @@ export const AuthContextProvider = ({ children }) => {
     
     const login = async (email, password) => {
         // TODO later combined with the backend services user-service an alethia-service
-        setToken(await loginUser(email, password))
+        const currentToken = await loginUser(email, password)
+        setToken(currentToken)
         setCurrentUser({id:3, name:"Elon Musk", img:"https://i.kym-cdn.com/entries/icons/mobile/000/027/100/_103330503_musk3.jpg"})
     }
 
