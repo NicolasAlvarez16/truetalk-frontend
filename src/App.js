@@ -39,8 +39,6 @@ function App() {
   }
 
   const ProtectedRoute = ({children}) => {
-    // stop using current user, start using token instead
-    // 2 checks -> !token, or token expired
       if (isTokenExpired()) {
         return <Navigate to="/login" />
       }
@@ -49,6 +47,9 @@ function App() {
   }
   
   const isTokenExpired = () => {
+    if (token === null) {
+      return <Navigate to="/login" />
+    }
     const decodedToken = jwtDecode(token)
     const currentTime = Date.now() / 1000
     return decodedToken.exp < currentTime
