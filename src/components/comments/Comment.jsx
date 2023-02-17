@@ -7,22 +7,22 @@ const Comments = () => {
     const {currentUser} = useContext(AuthContext)
     // TEMPORARY
     const comments = [
-        {
-            id: 1,
-            name: "Elon Musk",
-            userId: 1,
-            profilePic: "https://i.kym-cdn.com/entries/icons/mobile/000/027/100/_103330503_musk3.jpg",
-            desc: "lorem ipsum lorem ipsum",
-            img: "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg"
-        },
-        {
-            id: 2,
-            name: "Elon Musk",
-            userId: 1,
-            profilePic: "https://i.kym-cdn.com/entries/icons/mobile/000/027/100/_103330503_musk3.jpg",
-            desc: "lorem ipsum lorem ipsum",
-            img: "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg"
-        }
+        // {
+        //     id: 1,
+        //     name: "Elon Musk",
+        //     userId: 1,
+        //     profilePic: "https://i.kym-cdn.com/entries/icons/mobile/000/027/100/_103330503_musk3.jpg",
+        //     desc: "lorem ipsum lorem ipsum",
+        //     img: "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg"
+        // },
+        // {
+        //     id: 2,
+        //     name: "Elon Musk",
+        //     userId: 1,
+        //     profilePic: "https://i.kym-cdn.com/entries/icons/mobile/000/027/100/_103330503_musk3.jpg",
+        //     desc: "lorem ipsum lorem ipsum",
+        //     img: "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg"
+        // }
     ]
     return (
         <div className="comments">

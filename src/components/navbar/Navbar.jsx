@@ -22,7 +22,7 @@ const Navbar = () => {
                 <Link to="/" style={{textDecoration:"none"}}>
                     <span>hive</span>
                 </Link>
-                <HomeOutlinedIcon />
+                {/* <HomeOutlinedIcon /> */}
                 {darkMode ? <WbSunnyIcon onClick={toggle}/> : <DarkModeIcon onClick={toggle}/>}
                 <GridViewOutlinedIcon />
                 <div className="search">

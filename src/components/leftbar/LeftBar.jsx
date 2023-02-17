@@ -16,7 +16,7 @@ const LeftBar = () => {
       <div className="container">
         <div className="menu">
           <div className="user">
-            <img src={currentUser.img} alt="" />
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
             <span>{currentUser.name}</span>
           </div>
           <div className="item">
