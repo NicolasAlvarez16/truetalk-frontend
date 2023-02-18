@@ -16,6 +16,14 @@ const Post = ({post}) => {
     // TEMPORARY 
     const liked = false
 
+    function commentsLenght() {
+        if (post.comments === null) {
+            return <span>0</span>
+        } else {
+            return <span>{post.comments.length}</span>
+        }
+    }
+
     return (
         <div className="post">
             <div className="container">
@@ -23,26 +31,26 @@ const Post = ({post}) => {
                     <div className="userInfo">
                         <img src={post.profilePic} alt="" />
                         <div className="details">
-                            <Link to={`/profile/${post.userId}`} style={{textDecoration: "none", color: "inherit"}}>
+                            <Link to={`/profile/${post.user}`} style={{textDecoration: "none", color: "inherit"}}>
                                 <span className="name">{post.name}</span>
                             </Link>
-                            <span className="date">1 min ago</span>
+                            <span className="date">{post.date}</span>
                         </div>
                     </div>
                     <MoreHorizIcon/>
                 </div>
                 <div className="content">
-                    <p>{post.desc}</p>
+                    <p>{post.text}</p>
                     <img src={post.img} alt="" />
                 </div>
                 <div className="info">
                     <div className="item">
                         {liked ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
-                        12 Likes
+                        {post.likes}
                     </div>
                     <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <MessageIcon/>
-                        12 Comments
+                        {commentsLenght()}
                     </div>
                     <div className="item">
                         <ShareIcon/>

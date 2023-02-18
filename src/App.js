@@ -39,6 +39,7 @@ function App() {
   }
 
   const ProtectedRoute = ({children}) => {
+    console.log("Is token exppired " + isTokenExpired())
       if (!token || isTokenExpired()) {
         console.log("Not fast enough hahah")
         return <Navigate to="/login" />

@@ -37,3 +37,26 @@ export async function loginUser(email, password) {
         console.log(err.message)
     })
 }
+
+export async function userProfile(uuid) {
+    return await fetch("http://localhost:8000/api/users/user-profile?uuid=" + uuid, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    .then(response => response.json())
+    .then(response => {
+        if (response.status === 200) {
+            return {
+                name: response.data.name, 
+                country: response.data.country, 
+                language:response.data.language
+            }
+        }
+        return false
+    })
+    .catch((err) => {
+        console.log(err.message)
+    })
+}
