@@ -46,7 +46,6 @@ const Profile = () => {
         })
     })
 
-    console.log("Nameeee: ", name)
     if (loading) return "Loading...."
 
     return (
