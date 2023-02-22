@@ -1,65 +1,88 @@
-import { useRef } from "react"
-import { useState, useEffect} from "react"
-import { userPosts } from "../../services/postService"
 import Post from "../post/Post"
 import "./posts.scss"
-import { useNavigate } from "react-router-dom"
-import { userProfile } from "../../services/userService"
+import axios from "axios"
+import { useQueries } from "@tanstack/react-query"
+import { useLocation } from "react-router-dom";
 
 const Posts = ({uuid, name}) => {
 
-    const [posts, setPosts] = useState([])
-    const effectCalled = useRef(false);
-    const [loading, setLoading] = useState(true)
+    const path = useLocation().pathname.split("/")[1]
 
-    useEffect(() => {
-        if (!effectCalled.current) {
-            effectCalled.current = true
-            return
+    async function getUserPosts() {
+        return axios.get("http://localhost:8002/api/posts/user-posts?uuid=" + uuid).then(res => {
+            const data =  res.data.data.user_posts
+            const posts = formatPost(data)
+            return posts
+        })
+    }
+
+    async function getFolloweePosts() {
+        if (path === 'profile') {
+            return []
         }
-        fetch("http://localhost:8002/api/posts/user-posts?uuid=" + uuid, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+        return axios.get("http://localhost:8002/api/posts/list-followee-posts?uuid=" + uuid).then(res => {
+            const data = res.data.data.followees_posts
+            const posts = formatPost(data)
+            return posts
+        })
+    }
+
+    function formatPost(data) {
+        const posts = []
+
+        data.forEach((post) => {
+            const postDate = new Date(post.cratedAt * 1000).toLocaleDateString()
+            const postTime = new Date(post.cratedAt * 1000).toLocaleTimeString()
+            posts.push({
+                id: post.id,
+                name: name,
+                user: uuid,
+                profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                text: post.text,
+                date: postDate + " " + postTime,
+                likes: post.likes,
+                comments: post.comments,
+            })
+        })
+
+        return posts
+    }
+
+    const [userPosts, followeePosts] = useQueries({
+        queries: [
+            {
+                queryKey: ['posts'],
+                queryFn: () => getUserPosts()
             },
-        })
-        .then(response => response.json())
-        .then(response => {
-            if (response.status === 200) {
-                for (var i = 0; i < response.data.user_posts.length; i++) {
-                    const post = response.data.user_posts[i]
-                    const postDate = new Date(post.cratedAt * 1000).toLocaleDateString()
-                    const postTime = new Date(post.cratedAt * 1000).toLocaleTimeString()
-                    setPosts((prevPosts) => [...prevPosts, 
-                        {
-                            id: post.id,
-                            name: name,
-                            user: uuid,
-                            profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-                            text: post.text,
-                            date: postDate + " " + postTime,
-                            likes: post.likes,
-                            comments: post.comments,
-                        }
-                    ])
-                }
-            }
-        })
-        .catch((err) => {
-            console.log(err.message)
-        })
-        .finally(() => {
-            setLoading(false)
-        })
-    }, [])
+            {
+                queryKey: ['followeePosts'],
+                queryFn: () => getFolloweePosts()
+            },
+        ],
+    })
 
-    if (loading) return "Loading...."
+    
+    if (followeePosts.isLoading) return "Loading posts..."
+    if (userPosts.isLoading) return "Loading posts..."
+    
+    if (followeePosts.error) return "An error has occurred"
+    if (userPosts.error) return "An error has occurred"
 
+    function fomatPostDate(date) {
+        const [datePart, timePart] = date.split(' ')
+        const [day, month, year] = datePart.split('/')
+        return new Date(`${year}-${month}-${day} ${timePart}`)
+    }
+    
+    const pagePosts = () => {
+        const allPosts = followeePosts.data.concat(userPosts.data)
+        allPosts.sort((a, b) => fomatPostDate(b.date) - fomatPostDate(a.date))
+        return allPosts
+    }
+    
     return (
         <div className="posts">
-            {posts.map(post => (
-                <Post post={post} key={post.id}/>
-            ))}
+            {pagePosts().map((post) => <Post post={post}/>)}
         </div>
     )
 }

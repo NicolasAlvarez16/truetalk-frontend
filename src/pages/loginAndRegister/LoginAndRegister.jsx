@@ -39,6 +39,14 @@ function LoginAndRegister(props) {
         setErrors(email, password, confirmPassword)
         if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
             registerUser(email, password)
+
+            // To Uncomment when register is going to happen
+            // axios.post("http://localhost:8000/api/users/register-user", { 
+            //     email: email, 
+            //     password: password 
+            // }, {
+            //     headers: { 'Content-Type': 'application/json'}
+            // })
         }
     }
 
