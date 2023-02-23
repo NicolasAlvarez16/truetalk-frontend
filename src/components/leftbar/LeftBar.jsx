@@ -4,12 +4,31 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventIcon from '@mui/icons-material/Event';
 import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
 import FeedIcon from '@mui/icons-material/Feed';
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
+import jwtDecode from "jwt-decode";
+import { Link } from "react-router-dom"
+import axios from "axios"
+import { useQuery } from "@tanstack/react-query"
 
 const LeftBar = () => {
 
-  const { currentUser } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
+
+  function getUuid() {
+    const decdoeToken = jwtDecode(token)
+    return decdoeToken.uuid
+  }
+
+  function getProfilePage() {
+    return "/profile/" + getUuid()
+  }
+
+  const {isLoading, error, data} = useQuery(['name'], () => 
+    axios.get("http://localhost:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+        return res.data.data.name
+    })
+  )
 
   return (
     <div className='leftBar'>
@@ -17,7 +36,9 @@ const LeftBar = () => {
         <div className="menu">
           <div className="user">
             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
-            <span>{currentUser.name}</span>
+            <Link to={getProfilePage()} style={{textDecoration:"none"}}>
+            {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
+            </Link>
           </div>
           <div className="item">
             <div className="icon">

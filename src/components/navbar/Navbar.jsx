@@ -1,5 +1,4 @@
 import "./navbar.scss"
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -8,14 +7,34 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Link } from "react-router-dom"
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
+import jwtDecode from "jwt-decode";
+import axios from "axios"
+import { useQuery } from "@tanstack/react-query"
 
 const Navbar = () => {
     
     const { toggle, darkMode } = useContext(DarkModeContext);
-    const { currentUser } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
+
+    
+    function getUuid() {
+        const decodedToken = jwtDecode(token)
+        return decodedToken.uuid
+    }
+    
+    function getProfilePage() {
+        return "/profile/" + getUuid()
+    }
+    
+    const {isLoading, error, data} = useQuery(['name'], () => 
+        axios.get("http://localhost:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+            return res.data.data.name
+        })
+    )
+
     return (
         <div className="navbar">
             <div className="left">
@@ -35,8 +54,10 @@ const Navbar = () => {
                 <EmailOutlinedIcon />
                 <NotificationsNoneOutlinedIcon />
                 <div className="user">
-                    <img src={currentUser.img} alt="" />
-                    <span>{currentUser.name}</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+                    <Link to={getProfilePage()} style={{textDecoration:"none"}}>
+                    {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
+                    </Link>
                 </div>
             </div>
         </div>

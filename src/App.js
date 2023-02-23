@@ -15,7 +15,8 @@ import "./style.scss"
 import { useContext } from "react"
 import { DarkModeContext } from "./context/darkModeContext"
 import { AuthContext } from "./context/authContext"
-import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 function App() {
 
@@ -23,8 +24,11 @@ function App() {
 
   const {darkMode} = useContext(DarkModeContext)
 
+  const queryClient = new QueryClient()
+
   const Layout = () => {
     return (
+      <QueryClientProvider client={queryClient}>
         <div className={`theme-${darkMode ? "dark" : "light"}`}>
           <Navbar />
           <div style={{display: "flex"}}>
@@ -35,15 +39,14 @@ function App() {
             <RightBar />
           </div>
         </div>
+      </QueryClientProvider>
     )
   }
 
   const ProtectedRoute = ({children}) => {
-    console.log("Is token exppired " + isTokenExpired())
-      if (!token || isTokenExpired()) {
-        console.log("Not fast enough hahah")
-        return <Navigate to="/login" />
-      }
+    if (!token || isTokenExpired()) {
+      return <Navigate to="/login" />
+    }
 
     return children;
   }
