@@ -25,6 +25,8 @@ const Profile = () => {
     }
 
     function button() {
+        // TODO:
+        // Hide the button instead using the dom
         if (!isCurrentUserProfile()) {
             return <button>follow</button>
         }
