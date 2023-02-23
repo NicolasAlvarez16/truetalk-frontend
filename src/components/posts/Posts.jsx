@@ -4,7 +4,7 @@ import axios from "axios"
 import { useQueries } from "@tanstack/react-query"
 import { useLocation } from "react-router-dom";
 
-const Posts = ({uuid, name}) => {
+const Posts = ({uuid}) => {
 
     const path = useLocation().pathname.split("/")[1]
 
@@ -20,7 +20,7 @@ const Posts = ({uuid, name}) => {
         if (path === 'profile') {
             return []
         }
-        return axios.get("http://localhost:8002/api/posts/list-followee-posts?uuid=" + uuid).then(res => {
+        return axios.get("http://localhost:8002/api/posts/followee-posts?uuid=" + uuid).then(res => {
             const data = res.data.data.followees_posts
             const posts = formatPost(data)
             return posts
@@ -35,7 +35,7 @@ const Posts = ({uuid, name}) => {
             const postTime = new Date(post.cratedAt * 1000).toLocaleTimeString()
             posts.push({
                 id: post.id,
-                name: name,
+                name: post.name,
                 user: uuid,
                 profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
                 text: post.text,

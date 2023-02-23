@@ -66,7 +66,7 @@ const Profile = () => {
                         <MoreHorizIcon/>
                     </div>
                 </div>
-                {error ? <span>Something went wrong</span> : isLoading ? " " : <Posts uuid={uuid} name={data.name}/>}
+                {error ? <span>Something went wrong</span> : isLoading ? " " : <Posts uuid={uuid}/>}
             </div>
         </div>
     )
