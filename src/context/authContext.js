@@ -11,6 +11,8 @@ export const AuthContextProvider = ({ children }) => {
     )
     
     const login = async (email, password) => {
+        // TODO:
+        // Use axios instead
         let currentToken = await loginUser(email, password)
         if (!currentToken) {
             alert("Invalid email or password")
