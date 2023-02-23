@@ -8,18 +8,11 @@ import { useContext } from "react"
 
 const Home = () => {
 
-    const { token } = useContext(AuthContext);
-
-    const getUuid = () => {
-        const decodedToken = jwtDecode(token)
-        return decodedToken.uuid
-    }
-
     return (
         <div className="home">
             {/* <Stories/> */}
             <Share/>
-            <Posts uuid={getUuid()}/>
+            <Posts/>
         </div>
     )
 }

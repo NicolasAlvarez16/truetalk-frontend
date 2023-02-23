@@ -4,12 +4,19 @@ import axios from "axios"
 import { useQueries } from "@tanstack/react-query"
 import { useLocation } from "react-router-dom";
 
-const Posts = ({uuid}) => {
+const Posts = () => {
 
     const path = useLocation().pathname.split("/")[1]
 
+    const { token } = useContext(AuthContext);
+
+    const getUuid = () => {
+        const decodedToken = jwtDecode(token)
+        return decodedToken.uuid
+    }
+
     async function getUserPosts() {
-        return axios.get("http://localhost:8002/api/posts/user-posts?uuid=" + uuid).then(res => {
+        return axios.get("http://localhost:8002/api/posts/user-posts?uuid=" + getUuid()).then(res => {
             const data =  res.data.data.user_posts
             const posts = formatPost(data)
             return posts
@@ -20,7 +27,7 @@ const Posts = ({uuid}) => {
         if (path === 'profile') {
             return []
         }
-        return axios.get("http://localhost:8002/api/posts/followee-posts?uuid=" + uuid).then(res => {
+        return axios.get("http://localhost:8002/api/posts/followee-posts?uuid=" + getUuid()).then(res => {
             const data = res.data.data.followees_posts
             const posts = formatPost(data)
             return posts
