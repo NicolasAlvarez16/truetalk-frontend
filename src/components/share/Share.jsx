@@ -9,11 +9,11 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query"
 import jwtDecode from "jwt-decode";
 
+// THIS STILL NEEDS TO GRO THROUGH CHANGES
 const Share = () => {
 
   const [file, setFile] = useState(null);
   const [postText, setPostText] = useState("");
-  const [name, setName] = useState()
 
 //   const upload = async () => {
 //     try {

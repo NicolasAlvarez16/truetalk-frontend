@@ -82,7 +82,7 @@ const Posts = ({uuid}) => {
     
     return (
         <div className="posts">
-            {pagePosts().map((post) => <Post post={post}/>)}
+            {homePosts().map((post) => <Post post={post}/>)}
         </div>
     )
 }
