@@ -74,7 +74,7 @@ const Posts = ({uuid}) => {
         return new Date(`${year}-${month}-${day} ${timePart}`)
     }
     
-    const pagePosts = () => {
+    const homePosts = () => {
         const allPosts = followeePosts.data.concat(userPosts.data)
         allPosts.sort((a, b) => fomatPostDate(b.date) - fomatPostDate(a.date))
         return allPosts
