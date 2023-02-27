@@ -4,7 +4,7 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Posts from "../../components/posts/Posts";
 import { useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 import jwtDecode from "jwt-decode";
 import axios from "axios"
@@ -13,23 +13,59 @@ import { useQuery } from "@tanstack/react-query"
 const Profile = () => {
 
     const uuid = useLocation().pathname.split("/")[2]
-
+    
     const { token } = useContext(AuthContext)
+    
+    const [following, setFollowing] = useState()
 
-    function isCurrentUserProfile() {
+    function getUuid() {
         const decodedToken = jwtDecode(token)
-        if (!decodedToken.uuid === uuid) {
+        return decodedToken.uuid
+    }
+    
+    function isCurrentUserProfile() {
+        if (getUuid() !== uuid) {
             return false
         }
         return true
+    }   
+
+    useEffect(()=>{
+        fetch("http://localhost:8000/api/users/list-followees?uuid=" + getUuid())
+            .then((response) => response.json())
+            .then((response) => {
+                setFollowing(response.data.followees.includes(uuid))
+            })
+    }, []) 
+    
+
+    function button() { 
+        if (!isCurrentUserProfile()) {
+            if (following) {
+                return <button onClick={handleUnfollow} style={{ background: "salmon"}}>unfollow</button>    
+            }
+            return <button onClick={handleFollow}>follow</button>
+        }
     }
 
-    function button() {
-        // TODO:
-        // Hide the button instead using the dom
-        if (!isCurrentUserProfile()) {
-            return <button>follow</button>
-        }
+    function handleFollow() {
+        axios.post("http://localhost:8000/api/users/follow",  { 
+            follower_id: getUuid(),
+            followee_id: uuid
+        }, {
+            headers: { 'Content-Type': 'application/json'}
+        })
+        setFollowing(true)
+    }
+
+    function handleUnfollow() {
+        axios.post("http://localhost:8000/api/users/unfollow",  { 
+            follower_id: getUuid(),
+            followee_id: uuid
+        }, {
+            headers: { 'Content-Type': 'application/json'}
+        })
+        setFollowing(false)
     }
 
     const {isLoading, error, data} = useQuery(['profile'], () => 

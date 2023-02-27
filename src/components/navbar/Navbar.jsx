@@ -6,7 +6,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
@@ -19,6 +19,8 @@ const Navbar = () => {
     const { toggle, darkMode } = useContext(DarkModeContext);
     const { token } = useContext(AuthContext);
 
+    const navigate = useNavigate()
+
     
     function getUuid() {
         const decodedToken = jwtDecode(token)
@@ -27,6 +29,11 @@ const Navbar = () => {
     
     function getProfilePage() {
         return "/profile/" + getUuid()
+    }
+
+    function handleClick() {
+        navigate(getProfilePage());
+        window.location.reload()
     }
     
     const {isLoading, error, data} = useQuery(['name'], () => 
@@ -55,9 +62,10 @@ const Navbar = () => {
                 <NotificationsNoneOutlinedIcon />
                 <div className="user">
                     <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
-                    <Link to={getProfilePage()} style={{textDecoration:"none"}}>
+                    {/* <Link to={getProfilePage()} style={{textDecoration:"none"}}>
                     {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
-                    </Link>
+                    </Link> */}
+                    {error ? <span>Something went wrong</span> : isLoading ? " " : <button onClick={handleClick} style={{all: "unset", cursor: "pointer"}}>{data}</button>}
                 </div>
             </div>
         </div>
