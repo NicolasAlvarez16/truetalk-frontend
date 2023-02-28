@@ -33,9 +33,9 @@ const Share = () => {
   function getUuid() {
     const decodedToken = jwtDecode(token)
     return decodedToken.uuid
-}
+  }
 
-const {isLoading, error, data} = useQuery(['name'], () => 
+  const {isLoading, error, data} = useQuery(['name'], () => 
     axios.get("http://localhost:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
         return res.data.data.name
     })

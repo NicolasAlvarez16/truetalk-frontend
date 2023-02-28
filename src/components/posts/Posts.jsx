@@ -3,10 +3,14 @@ import "./posts.scss"
 import axios from "axios"
 import { useQueries } from "@tanstack/react-query"
 import { useLocation } from "react-router-dom";
+import { useContext } from "react"
+import jwtDecode from "jwt-decode";
+import { AuthContext } from "../../context/authContext";
 
 const Posts = () => {
 
     const path = useLocation().pathname.split("/")[1]
+    const pathUuid = useLocation().pathname.split("/")[2]
 
     const { token } = useContext(AuthContext);
 
@@ -16,7 +20,12 @@ const Posts = () => {
     }
 
     async function getUserPosts() {
-        return axios.get("http://localhost:8002/api/posts/user-posts?uuid=" + getUuid()).then(res => {
+        let uuidCall = getUuid()
+        if (pathUuid !== undefined) {
+            uuidCall = pathUuid
+        }
+        
+        return axios.get("http://localhost:8002/api/posts/user-posts?uuid=" + uuidCall).then(res => {
             const data =  res.data.data.user_posts
             const posts = formatPost(data)
             return posts
@@ -36,14 +45,14 @@ const Posts = () => {
 
     function formatPost(data) {
         const posts = []
-
         data.forEach((post) => {
-            const postDate = new Date(post.cratedAt * 1000).toLocaleDateString()
-            const postTime = new Date(post.cratedAt * 1000).toLocaleTimeString()
+            console.log("Post", post[0])
+            const postDate = new Date(post.createdAt * 1000).toLocaleDateString()
+            const postTime = new Date(post.createdAt * 1000).toLocaleTimeString()
             posts.push({
                 id: post.id,
                 name: post.name,
-                user: uuid,
+                user: post.user,
                 profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
                 text: post.text,
                 date: postDate + " " + postTime,
@@ -58,7 +67,7 @@ const Posts = () => {
     const [userPosts, followeePosts] = useQueries({
         queries: [
             {
-                queryKey: ['posts'],
+                queryKey: ['someOtherKey'],
                 queryFn: () => getUserPosts()
             },
             {
@@ -89,7 +98,7 @@ const Posts = () => {
     
     return (
         <div className="posts">
-            {homePosts().map((post) => <Post post={post}/>)}
+            {homePosts().map((post) => <Post post={post} alreadyLiked={post.likes.includes(getUuid())}key={post.id}/>)}
         </div>
     )
 }

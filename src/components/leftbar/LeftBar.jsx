@@ -7,13 +7,17 @@ import FeedIcon from '@mui/icons-material/Feed';
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 import jwtDecode from "jwt-decode";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
+import Profile from "../../pages/profile/Profile";
+
 
 const LeftBar = () => {
 
-  const { token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext) 
+
+  const navigate = useNavigate()
 
   function getUuid() {
     const decdoeToken = jwtDecode(token)
@@ -22,6 +26,11 @@ const LeftBar = () => {
 
   function getProfilePage() {
     return "/profile/" + getUuid()
+  }
+
+  function handleClick() {
+    navigate(getProfilePage());
+    window.location.reload()
   }
 
   const {isLoading, error, data} = useQuery(['name'], () => 
@@ -36,9 +45,11 @@ const LeftBar = () => {
         <div className="menu">
           <div className="user">
             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
-            <Link to={getProfilePage()} style={{textDecoration:"none"}}>
-            {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
-            </Link>
+            {/* <Link to={getProfilePage()} style={{textDecoration:"none"}}>
+              {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
+            </Link> */}
+            {error ? <span>Something went wrong</span> : isLoading ? " " : <button onClick={handleClick} style={{all: "unset", cursor: "pointer"}}>{data}</button>}
+
           </div>
           <div className="item">
             <div className="icon">
