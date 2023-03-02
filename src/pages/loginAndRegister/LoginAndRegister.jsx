@@ -7,7 +7,7 @@ import "./loginAndRegister.scss"
 
 function LoginAndRegister(props) {
 
-    const { token, login } = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -41,7 +41,7 @@ function LoginAndRegister(props) {
             registerUser(email, password)
 
             // To Uncomment when register is going to happen
-            // axios.post("http://localhost:8000/api/users/register-user", { 
+            // axios.post("http://192.168.0.161:8000/api/users/register-user", { 
             //     email: email, 
             //     password: password 
             // }, {
@@ -53,9 +53,6 @@ function LoginAndRegister(props) {
     const handleSignInSubmit = async (e) => {
         e.preventDefault()
         await login(email, password)
-        if (token) {
-            navigate("/")
-        }
     }
 
     return (
