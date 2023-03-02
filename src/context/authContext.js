@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { createContext } from "react"
-import { loginUser } from "../services/userService"
+import axios from "axios"
 
 export const AuthContext = createContext()
 
@@ -11,21 +11,24 @@ export const AuthContextProvider = ({ children }) => {
     )
     
     const login = async (email, password) => {
-        // TODO:
-        // Use axios instead
-        let currentToken = await loginUser(email, password)
-        if (!currentToken) {
+        axios.post("http://192.168.0.161:8000/api/users/login", { 
+                email: email,
+                password: password
+            }, {
+                headers: { 'Content-Type': 'application/json' }
+            }
+        ).then(res => {
+            console.log(res.data.data.token)
+            setToken(res.data.data.token)
+            window.location.href = '/'
+        }).catch(_ => {
             alert("Invalid email or password")
             setToken(null)
-            return
-        }
-        setToken(currentToken)
+        })
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            localStorage.setItem("token", JSON.stringify(token))
-        }, 100)
+        localStorage.setItem("token", JSON.stringify(token))        
     }, [token])
 
     return(

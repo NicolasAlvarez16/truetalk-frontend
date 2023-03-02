@@ -37,7 +37,7 @@ const Navbar = () => {
     }
     
     const {isLoading, error, data} = useQuery(['name'], () => 
-        axios.get("http://localhost:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+        axios.get("http://192.168.0.161:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
             return res.data.data.name
         })
     )
