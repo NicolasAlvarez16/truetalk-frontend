@@ -70,7 +70,6 @@ const Comments = ({comments, postId}) => {
             // Invalidate and refetch
             queryClient.invalidateQueries(["posts"]);
           },
-          dependencies: [postId],
         }
       );
 

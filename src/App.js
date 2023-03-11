@@ -17,6 +17,7 @@ import { DarkModeContext } from "./context/darkModeContext"
 import { AuthContext } from "./context/authContext"
 import jwtDecode from "jwt-decode"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import UserNotFound from "./pages/userNotFound/UserNotFound"
 
 function App() {
 
@@ -73,6 +74,10 @@ function App() {
         {
           path: "/profile/:id",
           element: <Profile />
+        },
+        {
+          path: "/user-not-found",
+          element: <UserNotFound/>
         }
       ]
     },
