@@ -18,6 +18,7 @@ const Navbar = () => {
     
     const { toggle, darkMode } = useContext(DarkModeContext);
     const { token } = useContext(AuthContext);
+    const [search, setSearch] = useState('')
 
     const navigate = useNavigate()
 
@@ -42,6 +43,16 @@ const Navbar = () => {
         })
     )
 
+    const handleSearch = () => {
+        const splittedSearch = search.split(" ")
+        axios.get("http://192.168.0.161:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
+            const user = res.data.data.uuid
+            navigate("/profile/" + user)
+        }).catch(_ => {
+            navigate("/user-not-found")
+        })
+    }
+
     return (
         <div className="navbar">
             <div className="left">
@@ -53,8 +64,9 @@ const Navbar = () => {
                 <GridViewOutlinedIcon />
                 <div className="search">
                     <SearchOutlinedIcon />
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="Search users" value={search} onChange={(e) => setSearch(e.target.value)}/>
                 </div>
+                <button onClick={handleSearch}>Share</button>
             </div>
             <div className="right">
                 <PersonOutlineOutlinedIcon />
