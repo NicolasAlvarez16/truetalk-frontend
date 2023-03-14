@@ -22,7 +22,7 @@ export const AuthContextProvider = ({ children }) => {
             setToken(res.data.data.token)
             window.location.href = '/'
         }).catch(_ => {
-            alert("Invalid email or password")
+            alert("Invalid user")
             setToken(null)
         })
     }

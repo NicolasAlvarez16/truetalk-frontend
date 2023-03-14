@@ -18,6 +18,7 @@ import { AuthContext } from "./context/authContext"
 import jwtDecode from "jwt-decode"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import UserNotFound from "./pages/userNotFound/UserNotFound"
+import axios from 'axios'
 
 function App() {
 
@@ -56,6 +57,11 @@ function App() {
     const decodedToken = jwtDecode(token)
     const currentTime = Date.now() / 1000
     return decodedToken.exp < currentTime
+  }
+
+  function getUuid() {
+    const decodedToken = jwtDecode(token)
+    return decodedToken.uuid
   }
 
   const router = createBrowserRouter([

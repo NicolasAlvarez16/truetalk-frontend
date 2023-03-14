@@ -57,7 +57,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="left">
                 <Link to="/" style={{textDecoration:"none"}}>
-                    <span>hive</span>
+                    <span>TrueTalk</span>
                 </Link>
                 {/* <HomeOutlinedIcon /> */}
                 {darkMode ? <WbSunnyIcon onClick={toggle}/> : <DarkModeIcon onClick={toggle}/>}
@@ -66,7 +66,7 @@ const Navbar = () => {
                     <SearchOutlinedIcon />
                     <input type="text" placeholder="Search users" value={search} onChange={(e) => setSearch(e.target.value)}/>
                 </div>
-                <button onClick={handleSearch}>Share</button>
+                <button onClick={handleSearch}>Search</button>
             </div>
             <div className="right">
                 <PersonOutlineOutlinedIcon />
