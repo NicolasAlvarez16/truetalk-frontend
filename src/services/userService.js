@@ -1,5 +1,5 @@
 export async function registerUser(email, password) {
-    await fetch("http://192.168.0.161:8000/api/users/register-user", {
+    await fetch("http://172.105.75.93:8000/api/users/register-user", {
         method: 'POST',
         body: JSON.stringify({
             email: email,

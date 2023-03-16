@@ -57,7 +57,7 @@ const Comments = ({comments, postId}) => {
 
     const mutation = useMutation(
         (newComment) => {
-          return axios.post("http://192.168.0.161:8002/api/posts/comment", { 
+          return axios.post("http://172.105.75.93:8002/api/posts/comment", { 
                 text: newComment.text, 
                 user: getUuid(),
                 post_id: postId
