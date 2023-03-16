@@ -25,7 +25,7 @@ const Posts = () => {
             uuidCall = pathUuid
         }
         
-        return axios.get("http://192.168.0.161:8002/api/posts/user-posts?uuid=" + uuidCall).then(res => {
+        return axios.get("http://172.105.75.93:8002/api/posts/user-posts?uuid=" + uuidCall).then(res => {
             const data =  res.data.data.user_posts
             const posts = formatPost(data)
             return posts
@@ -36,7 +36,7 @@ const Posts = () => {
         if (path === 'profile') {
             return []
         }
-        return axios.get("http://192.168.0.161:8002/api/posts/followee-posts?uuid=" + getUuid()).then(res => {
+        return axios.get("http://172.105.75.93:8002/api/posts/followee-posts?uuid=" + getUuid()).then(res => {
             const data = res.data.data.followees_posts
             const posts = formatPost(data)
             return posts

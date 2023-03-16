@@ -41,7 +41,7 @@ function LoginAndRegister(props) {
             registerUser(email, password)
 
             // To Uncomment when register is going to happen
-            // axios.post("http://192.168.0.161:8000/api/users/register-user", { 
+            // axios.post("http://172.105.75.93:8000/api/users/register-user", { 
             //     email: email, 
             //     password: password 
             // }, {

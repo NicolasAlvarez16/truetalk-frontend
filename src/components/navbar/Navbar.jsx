@@ -38,14 +38,14 @@ const Navbar = () => {
     }
     
     const {isLoading, error, data} = useQuery(['name'], () => 
-        axios.get("http://192.168.0.161:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+        axios.get("http://172.105.75.93:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
             return res.data.data.name
         })
     )
 
     const handleSearch = () => {
         const splittedSearch = search.split(" ")
-        axios.get("http://192.168.0.161:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
+        axios.get("http://172.105.75.93:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
             const user = res.data.data.uuid
             navigate("/profile/" + user)
         }).catch(_ => {
