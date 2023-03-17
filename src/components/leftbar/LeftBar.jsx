@@ -34,7 +34,7 @@ const LeftBar = () => {
   }
 
   const {isLoading, error, data} = useQuery(['name'], () => 
-    axios.get("http://172.105.75.93:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+    axios.get("http://192.46.239.71:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
         return res.data.data.name
     })
   )

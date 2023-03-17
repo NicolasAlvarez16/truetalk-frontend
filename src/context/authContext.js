@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
     )
     
     const login = async (email, password) => {
-        axios.post("http://172.105.75.93:8000/api/users/login", { 
+        axios.post("http://192.46.239.71:8000/api/users/login", { 
                 email: email,
                 password: password
             }, {
