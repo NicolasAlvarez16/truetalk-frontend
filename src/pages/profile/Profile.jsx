@@ -31,7 +31,7 @@ const Profile = () => {
     }   
 
     useEffect(()=>{
-        fetch("http://192.46.239.71:8000/api/users/list-followees?uuid=" + getUuid())
+        fetch("http://143.42.26.143:8000/api/users/list-followees?uuid=" + getUuid())
             .then((response) => response.json())
             .then((response) => {
                 setFollowing(response.data.followees.includes(uuid))
@@ -49,7 +49,7 @@ const Profile = () => {
     }
 
     function handleFollow() {
-        axios.post("http://192.46.239.71:8000/api/users/follow",  { 
+        axios.post("http://143.42.26.143:8000/api/users/follow",  { 
             follower_id: getUuid(),
             followee_id: uuid
         }, {
@@ -59,7 +59,7 @@ const Profile = () => {
     }
 
     function handleUnfollow() {
-        axios.post("http://192.46.239.71:8000/api/users/unfollow",  { 
+        axios.post("http://143.42.26.143:8000/api/users/unfollow",  { 
             follower_id: getUuid(),
             followee_id: uuid
         }, {
@@ -69,7 +69,7 @@ const Profile = () => {
     }
 
     const {isLoading, error, data} = useQuery(['profile'], () => 
-        axios.get("http://192.46.239.71:8000/api/users/user-profile?uuid=" + uuid).then(res => {
+        axios.get("http://143.42.26.143:8000/api/users/user-profile?uuid=" + uuid).then(res => {
             return res.data.data
         })
     )

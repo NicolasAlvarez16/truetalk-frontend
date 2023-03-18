@@ -36,7 +36,7 @@ const Share = () => {
   }
 
   const {isLoading, error, data} = useQuery(['name'], () => 
-    axios.get("http://192.46.239.71:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+    axios.get("http://143.42.26.143:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
         return res.data.data.name
     })
   )
@@ -44,7 +44,7 @@ const Share = () => {
 
   const mutation = useMutation(
     (newPost) => {
-      return axios.post("http://192.46.239.71:8002/api/posts/save-post", { 
+      return axios.post("http://143.42.26.143:8002/api/posts/save-post", { 
             text: newPost.text, 
             user: getUuid()
         }, {
