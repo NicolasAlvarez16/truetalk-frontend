@@ -48,6 +48,7 @@ function LoginAndRegister(props) {
             //     headers: { 'Content-Type': 'application/json'}
             // })
         }
+        alert("Processing... You will receive an email shotly with follow up instructions")
     }
 
     const handleSignInSubmit = async (e) => {

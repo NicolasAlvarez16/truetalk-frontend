@@ -14,6 +14,7 @@ const Share = () => {
 
   const [file, setFile] = useState(null);
   const [postText, setPostText] = useState("");
+  const [profileUrl, setProfileUrl] = useState()
 
 //   const upload = async () => {
 //     try {
@@ -67,12 +68,20 @@ const Share = () => {
     // setFile(null);
   };
 
+  useEffect(()=>{    
+    fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + getUuid())
+        .then((res) => res.json())
+        .then((res) => {
+            setProfileUrl(res.data.profile_picture_url)
+        })
+}, []) 
+
   return (
     <div className="share">
       <div className="container">
         <div className="top">
           <div className="left">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+            <img src={profileUrl} alt="" />
             <input
               type="text"
               placeholder={`What's on your mind ${error ? "Something went wrong!" : isLoading ? " " : data}?`}
