@@ -17,6 +17,8 @@ const LeftBar = () => {
 
   const { token } = useContext(AuthContext) 
 
+  const [profileUrl, setProfileUrl] = useState()
+
   const navigate = useNavigate()
 
   function getUuid() {
@@ -39,12 +41,20 @@ const LeftBar = () => {
     })
   )
 
+  useEffect(()=>{    
+    fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + getUuid())
+        .then((res) => res.json())
+        .then((res) => {
+            setProfileUrl(res.data.profile_picture_url)
+        })
+}, []) 
+
   return (
     <div className='leftBar'>
       <div className="container">
         <div className="menu">
           <div className="user">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+            <img src={profileUrl} alt="" />
             {/* <Link to={getProfilePage()} style={{textDecoration:"none"}}>
               {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
             </Link> */}
