@@ -9,6 +9,7 @@ import { AuthContext } from "../../context/authContext";
 import jwtDecode from "jwt-decode";
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
+import { Rtt } from "@mui/icons-material";
 
 const Profile = () => {
 
@@ -17,6 +18,8 @@ const Profile = () => {
     const { token } = useContext(AuthContext)
     
     const [following, setFollowing] = useState()
+
+    const [profileUrl, setProfileUrl] = useState()
 
     function getUuid() {
         const decodedToken = jwtDecode(token)
@@ -35,6 +38,12 @@ const Profile = () => {
             .then((response) => response.json())
             .then((response) => {
                 setFollowing(response.data.followees.includes(uuid))
+            })
+        
+        fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + uuid)
+            .then((res) => res.json())
+            .then((res) => {
+                setProfileUrl(res.data.profile_picture_url)
             })
     }, []) 
     
@@ -78,7 +87,7 @@ const Profile = () => {
         <div className="profile">
             <div className="images">
                 {/* <img src="https://www.flytap.com/-/media/Flytap/new-tap-pages/destinations/europe/ireland/dublin/destinations-dublin-banner-mobile-1024x553.jpg" alt="" className="cover" /> */}
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" className="profilePic" />
+                <img src={profileUrl} alt="" className="profilePic" />
             </div>
             <div className="profileContainer">
                 <div className="uInfo">

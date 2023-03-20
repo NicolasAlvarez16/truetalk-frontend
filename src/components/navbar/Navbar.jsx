@@ -19,6 +19,7 @@ const Navbar = () => {
     const { toggle, darkMode } = useContext(DarkModeContext);
     const { token } = useContext(AuthContext);
     const [search, setSearch] = useState('')
+    const [profileUrl, setProfileUrl] = useState()
 
     const navigate = useNavigate()
 
@@ -53,6 +54,14 @@ const Navbar = () => {
         })
     }
 
+    useEffect(()=>{
+        fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + getUuid())
+            .then((res) => res.json())
+            .then((res) => {
+                setProfileUrl(res.data.profile_picture_url)
+            })
+    }, []) 
+
     return (
         <div className="navbar">
             <div className="left">
@@ -73,7 +82,7 @@ const Navbar = () => {
                 <EmailOutlinedIcon />
                 <NotificationsNoneOutlinedIcon />
                 <div className="user">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+                    <img src={profileUrl} alt="" />
                     {/* <Link to={getProfilePage()} style={{textDecoration:"none"}}>
                     {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data}</span>}
                     </Link> */}
