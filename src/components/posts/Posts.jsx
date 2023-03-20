@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useContext } from "react"
 import jwtDecode from "jwt-decode";
 import { AuthContext } from "../../context/authContext";
+import { useState } from "react";
 
 const Posts = () => {
 
@@ -13,6 +14,8 @@ const Posts = () => {
     const pathUuid = useLocation().pathname.split("/")[2]
 
     const { token } = useContext(AuthContext);
+
+    const [profileUrl, setProfileUrl] = useState()
 
     const getUuid = () => {
         const decodedToken = jwtDecode(token)
@@ -43,17 +46,25 @@ const Posts = () => {
         })
     }
 
+    function getProfileUrl(uuid) {
+        fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + uuid)
+            .then((res) => res.json())
+            .then((res) => {
+                setProfileUrl(res.data.profile_picture_url)
+            })
+    }
+
     function formatPost(data) {
         const posts = []
         data.forEach((post) => {
-            console.log("Post", post[0])
             const postDate = new Date(post.createdAt * 1000).toLocaleDateString()
             const postTime = new Date(post.createdAt * 1000).toLocaleTimeString()
+            getProfileUrl(post.user)
             posts.push({
                 id: post.id,
                 name: post.name,
                 user: post.user,
-                profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                profilePic: profileUrl,
                 text: post.text,
                 date: postDate + " " + postTime,
                 likes: post.likes,
