@@ -47,7 +47,7 @@ const Posts = () => {
     }
 
     function getProfileUrl(uuid) {
-        fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + uuid)
+        fetch("https://truetalk.ie:8000/api/users/profile-picture-url?uuid=" + uuid)
             .then((res) => res.json())
             .then((res) => {
                 setProfileUrl(res.data.profile_picture_url)

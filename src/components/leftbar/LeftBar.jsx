@@ -36,13 +36,13 @@ const LeftBar = () => {
   }
 
   const {isLoading, error, data} = useQuery(['name'], () => 
-    axios.get("http://143.42.26.143:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+    axios.get("https://truetalk.ie:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
         return res.data.data.name
     })
   )
 
   useEffect(()=>{    
-    fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + getUuid())
+    fetch("https://truetalk.ie:8000/api/users/profile-picture-url?uuid=" + getUuid())
         .then((res) => res.json())
         .then((res) => {
             setProfileUrl(res.data.profile_picture_url)
