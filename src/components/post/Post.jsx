@@ -41,7 +41,7 @@ const Post = ({post, alreadyLiked}) => {
     }
 
     const getPostLikes = async () => {
-        const postLikes = await fetch("https://truetalk.ie:8002/api/postslikes?post_id=" + post.id)
+        const postLikes = await fetch("https://truetalk.ie:8002/api/posts/likes?post_id=" + post.id)
             .then((response) => response.json())
             .then((response) => response.data.post_likes)
         return postLikes
@@ -50,13 +50,13 @@ const Post = ({post, alreadyLiked}) => {
     const handleLike = async () => {
         const postLikes = await getPostLikes()
         if (postLikes.includes(getUuid())) {
-            fetch('https://truetalk.ie:8002/api/postsunlike', likeUnlikeRequestOptions).finally(async () => {
+            fetch('https://truetalk.ie:8002/api/posts/unlike', likeUnlikeRequestOptions).finally(async () => {
                 setLiked(false)
                 const postLikesFinally = await getPostLikes()
                 setLikesLength(postLikesFinally.length)
             })
         } else {
-            fetch('https://truetalk.ie:8002/api/postslike', likeUnlikeRequestOptions).finally(async () => {
+            fetch('https://truetalk.ie:8002/api/posts/like', likeUnlikeRequestOptions).finally(async () => {
                 setLiked(true)
                 const postLikesFinally = await getPostLikes()
                 setLikesLength(postLikesFinally.length)

@@ -57,7 +57,7 @@ const Comments = ({comments, postId}) => {
 
     const mutation = useMutation(
         (newComment) => {
-          return axios.post("https://truetalk.ie:8002/api/postscomment", { 
+          return axios.post("https://truetalk.ie:8002/api/posts/comment", { 
                 text: newComment.text, 
                 user: getUuid(),
                 post_id: postId

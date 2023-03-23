@@ -45,7 +45,7 @@ const Share = () => {
 
   const mutation = useMutation(
     (newPost) => {
-      return axios.post("https://truetalk.ie:8002/api/postssave-post", { 
+      return axios.post("https://truetalk.ie:8002/api/posts/save-post", { 
             text: newPost.text, 
             user: getUuid()
         }, {
