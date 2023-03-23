@@ -28,7 +28,7 @@ const Posts = () => {
             uuidCall = pathUuid
         }
         
-        return axios.get("http://143.42.26.143:8002/api/posts/user-posts?uuid=" + uuidCall).then(res => {
+        return axios.get("https://truetalk.ie:8002/api/postsuser-posts?uuid=" + uuidCall).then(res => {
             const data =  res.data.data.user_posts
             const posts = formatPost(data)
             return posts
@@ -39,7 +39,7 @@ const Posts = () => {
         if (path === 'profile') {
             return []
         }
-        return axios.get("http://143.42.26.143:8002/api/posts/followee-posts?uuid=" + getUuid()).then(res => {
+        return axios.get("https://truetalk.ie:8002/api/postsfollowee-posts?uuid=" + getUuid()).then(res => {
             const data = res.data.data.followees_posts
             const posts = formatPost(data)
             return posts
