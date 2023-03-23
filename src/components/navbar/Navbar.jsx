@@ -39,14 +39,14 @@ const Navbar = () => {
     }
     
     const {isLoading, error, data} = useQuery(['name'], () => 
-        axios.get("http://143.42.26.143:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
+        axios.get("https://truetalk.ie:8000/api/users/user-profile?uuid=" + getUuid()).then(res => {
             return res.data.data.name
         })
     )
 
     const handleSearch = () => {
         const splittedSearch = search.split(" ")
-        axios.get("http://143.42.26.143:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
+        axios.get("https://truetalk.ie:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
             const user = res.data.data.uuid
             navigate("/profile/" + user)
         }).catch(_ => {
@@ -55,7 +55,7 @@ const Navbar = () => {
     }
 
     useEffect(()=>{
-        fetch("http://143.42.26.143:8000/api/users/profile-picture-url?uuid=" + getUuid())
+        fetch("https://truetalk.ie:8000/api/users/profile-picture-url?uuid=" + getUuid())
             .then((res) => res.json())
             .then((res) => {
                 setProfileUrl(res.data.profile_picture_url)
