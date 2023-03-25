@@ -45,8 +45,9 @@ const Navbar = () => {
     )
 
     const handleSearch = () => {
-        const splittedSearch = search.split(" ")
-        axios.get("https://truetalk.ie:8000/api/users/find-user?first_name=" + splittedSearch[0] + "&last_name=" + splittedSearch[1]).then(res => {
+        const firstanme = search.split(" ")[0]
+        const lastname = search.split(' ').slice(1).join(' ')
+        axios.get("https://truetalk.ie:8000/api/users/find-user?first_name=" + firstanme + "&last_name=" + lastname).then(res => {
             const user = res.data.data.uuid
             navigate("/profile/" + user)
         }).catch(_ => {
