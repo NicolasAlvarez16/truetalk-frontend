@@ -9,7 +9,7 @@ import { AuthContext } from "../../context/authContext";
 import jwtDecode from "jwt-decode";
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Rtt } from "@mui/icons-material";
+import ContactsIcon from '@mui/icons-material/Contacts';
 
 const Profile = () => {
 
@@ -100,6 +100,10 @@ const Profile = () => {
                             <div className="item">
                                 <PlaceIcon/>
                                 {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data.country}</span>}
+                            </div>
+                            <div className="item">
+                                <ContactsIcon/>
+                                {error ? <span>Something went wrong</span> : isLoading ? " " : <span>{data.followers}</span>}
                             </div>
                             <div className="item">
                                 <TranslateIcon/>
