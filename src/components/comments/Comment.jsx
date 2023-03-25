@@ -13,6 +13,16 @@ const Comments = ({comments, postId}) => {
 
     const queryClient = useQueryClient();
 
+    const [profileUrl, setProfileUrl] = useState()
+
+    useEffect(()=>{
+        fetch("https://truetalk.ie:8000/api/users/profile-picture-url?uuid=" + getUuid())
+            .then((res) => res.json())
+            .then((res) => {
+                setProfileUrl(res.data.profile_picture_url)
+            })
+    }, [])
+
     const getComments = (comments) => {
         const formattedComments = []
         
@@ -23,7 +33,7 @@ const Comments = ({comments, postId}) => {
                 id: comment.id,
                 name: comment.name,
                 user: comment.user,
-                profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                profilePic: profileUrl,
                 text: comment.text,
                 date: commentDate + " " + commentTime,
             })
@@ -77,7 +87,7 @@ const Comments = ({comments, postId}) => {
     return (
         <div className="comments">
             <div className="write">
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+                <img src={profileUrl} alt="" />
                 <input 
                     type="text" 
                     placeholder="write a comment"
