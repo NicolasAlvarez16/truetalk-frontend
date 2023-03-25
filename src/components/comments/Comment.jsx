@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/authContext"
 import "./comments.scss"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
