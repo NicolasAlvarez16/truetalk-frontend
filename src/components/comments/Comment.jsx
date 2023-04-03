@@ -33,7 +33,7 @@ const Comments = ({comments, postId}) => {
                 id: comment.id,
                 name: comment.name,
                 user: comment.user,
-                profilePic: profileUrl,
+                profilePic: post.profilePictureUrl,
                 text: comment.text,
                 date: commentDate + " " + commentTime,
             })
@@ -70,7 +70,8 @@ const Comments = ({comments, postId}) => {
           return axios.post("https://truetalk.ie:8002/api/posts/comment", { 
                 text: newComment.text, 
                 user: getUuid(),
-                post_id: postId
+                post_id: postId,
+                profilePictureUrl: profileUrl
             }, {
                 headers: { 'Content-Type': 'application/json'}
             });
