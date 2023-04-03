@@ -47,7 +47,8 @@ const Share = () => {
     (newPost) => {
       return axios.post("https://truetalk.ie:8002/api/posts/save-post", { 
             text: newPost.text, 
-            user: getUuid()
+            user: getUuid(),
+            profilePictureUrl: profileUrl
         }, {
             headers: { 'Content-Type': 'application/json'}
         });
