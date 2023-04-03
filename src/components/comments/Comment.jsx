@@ -33,7 +33,7 @@ const Comments = ({comments, postId}) => {
                 id: comment.id,
                 name: comment.name,
                 user: comment.user,
-                profilePic: post.profilePictureUrl,
+                profilePic: comment.profilePictureUrl,
                 text: comment.text,
                 date: commentDate + " " + commentTime,
             })
