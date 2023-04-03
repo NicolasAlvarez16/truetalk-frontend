@@ -15,8 +15,6 @@ const Posts = () => {
 
     const { token } = useContext(AuthContext);
 
-    const [profileUrl, setProfileUrl] = useState()
-
     const getUuid = () => {
         const decodedToken = jwtDecode(token)
         return decodedToken.uuid
@@ -46,25 +44,16 @@ const Posts = () => {
         })
     }
 
-    function getProfileUrl(uuid) {
-        fetch("https://truetalk.ie:8000/api/users/profile-picture-url?uuid=" + uuid)
-            .then((res) => res.json())
-            .then((res) => {
-                setProfileUrl(res.data.profile_picture_url)
-            })
-    }
-
     function formatPost(data) {
         const posts = []
         data.forEach((post) => {
             const postDate = new Date(post.createdAt * 1000).toLocaleDateString()
             const postTime = new Date(post.createdAt * 1000).toLocaleTimeString()
-            getProfileUrl(post.user)
             posts.push({
                 id: post.id,
                 name: post.name,
                 user: post.user,
-                profilePic: profileUrl,
+                profilePic: post.profilePictureUrl,
                 text: post.text,
                 date: postDate + " " + postTime,
                 likes: post.likes,
